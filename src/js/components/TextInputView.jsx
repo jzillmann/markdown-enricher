@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Button from 'grommet/components/Button'
 import ProcessIcon from 'grommet/components/icons/base/RadialSelected';
@@ -8,6 +9,8 @@ import Layer from 'grommet/components/Layer'
 
 import Settings from './Settings.jsx';
 
+import TextWithConfig from '../plain/TextWithConfig.js'
+
 export default class TextInputView extends React.Component {
 
     constructor(props) {
@@ -16,6 +19,7 @@ export default class TextInputView extends React.Component {
             text: null,
             popupCancelled: false,
             showSettings: false,
+            submitFunction: props.submitFunction
         };
     }
 
@@ -40,6 +44,10 @@ export default class TextInputView extends React.Component {
         });
     }
 
+    submitConfig(config) {
+        this.state.submitFunction(new TextWithConfig(this.state.text, config))
+    }
+
     render() {
         const layer = (this.state.showSettings)
             ? <Layer
@@ -47,7 +55,7 @@ export default class TextInputView extends React.Component {
                      closer={ true }
                      flush={ true }
                      onClose={ this.settingsCancelled.bind(this) }>
-                <Settings/>
+                <Settings submitConfigFunction={ this.submitConfig.bind(this) } />
               </Layer>
             : null;
 
@@ -77,3 +85,7 @@ export default class TextInputView extends React.Component {
     }
 
 }
+
+TextInputView.propTypes = {
+    submitFunction: PropTypes.func.isRequired
+};

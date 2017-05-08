@@ -8,10 +8,20 @@ import Title from 'grommet/components/Title'
 import Footer from 'grommet/components/Footer'
 
 import TextInputView from './TextInputView.jsx';
+import RenderView from './RenderView.jsx';
+
+import TextWithConfig from '../plain/TextWithConfig.js';
 
 export default class App extends React.Component {
 
+    submit(textWithConfig:TextWithConfig) {
+        this.setState({
+            textWithConfig: textWithConfig
+        });
+    }
+
     render() {
+        const view = this.state && this.state.textWithConfig ? <RenderView textWithConfig={ this.state.textWithConfig } /> : <TextInputView submitFunction={ this.submit.bind(this) } />
 
         return (
             <GrommetApp centered={ false }>
@@ -26,7 +36,7 @@ export default class App extends React.Component {
                   </Title>
                 </Header>
                 <Section colorIndex="light-2">
-                  <TextInputView/>
+                  { view }
                 </Section>
                 <Footer
                         appCentered={ true }
@@ -42,4 +52,6 @@ export default class App extends React.Component {
             </GrommetApp>
         );
     }
+
 }
+

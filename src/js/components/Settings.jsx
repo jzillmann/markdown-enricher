@@ -1,7 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import Box from 'grommet/components/Box'
-import Article from 'grommet/components/Article'
 import Heading from 'grommet/components/Heading'
 import Header from 'grommet/components/Header'
 import Section from 'grommet/components/Section'
@@ -14,16 +13,21 @@ import FormField from 'grommet/components/FormField'
 import TextInput from 'grommet/components/TextInput'
 import Select from 'grommet/components/Select'
 
+import Config from '../plain/Config.js'
 
 export default class Settings extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            submitConfigFunction: props.submitConfigFunction,
             title: null,
-            documentType: null,
+            type: null,
             source: null,
             tags: null,
+            titleError: null,
+            typeError: null,
+            sourceError: null,
         };
 
         this.changeTitle = this.changeTitle.bind(this);
@@ -41,7 +45,7 @@ export default class Settings extends React.Component {
 
     selectType(event) {
         this.setState({
-            documentType: event.value
+            type: event.value
         });
     }
 
@@ -58,15 +62,36 @@ export default class Settings extends React.Component {
     }
 
     submit() {
-        // event.preventDefault();
-        console.debug("Submit");
-        console.debug(this.state);
-    // if (this.state.item) {
-    //     this.props.onSubmit({
-    //         item: this.state.item,
-    //         status: this.state.status || 'ok'
-    //     });
-    // }
+        let titleError;
+        let typeError;
+        let sourceError;
+        var hasErrors = false;
+        if (!this.state.title) {
+            titleError = "Don't leave blank!";
+            hasErrors = true;
+        }
+        if (!this.state.type) {
+            typeError = "Choose your weapon!";
+            hasErrors = true;
+        }
+        if (!this.state.source) {
+            sourceError = "Don't leave blank!";
+            hasErrors = true;
+        }
+        if (hasErrors) {
+            this.setState({
+                titleError: titleError,
+                typeError: typeError,
+                sourceError: sourceError,
+            });
+        } else {
+            this.state.submitConfigFunction(new Config({
+                title: this.state.title,
+                type: this.state.type,
+                source: this.state.source,
+                tags: this.state.tags,
+            }));
+        }
     }
 
     render() {
@@ -84,18 +109,20 @@ export default class Settings extends React.Component {
                 </Header>
                 <FormFields>
                   <fieldset>
-                    <FormField label="Title">
+                    <FormField label="Title" error={ this.state.titleError }>
                       <TextInput onDOMChange={ this.changeTitle } autoFocus />
                     </FormField>
-                    <Select
-                            placeHolder='None'
-                            options={ ['Transcript', 'Edited Transcript', 'Translation', 'Compilation'] }
-                            onChange={ this.selectType }
-                            value={ this.state.documentType } />
-                    <FormField label="Source (TODO don't show for compilation)">
+                    <FormField label="Type" error={ this.state.typeError }>
+                      <Select
+                              placeHolder='None'
+                              options={ ['Transcript', 'Edited Transcript', 'Translation', 'Compilation'] }
+                              onChange={ this.selectType }
+                              value={ this.state.type } />
+                    </FormField>
+                    <FormField label="Source (TODO don't show for compilation)" error={ this.state.sourceError }>
                       <TextInput onDOMChange={ this.changeSource } />
                     </FormField>
-                    <FormField label="Tags (comma seperated)" error="Don't leave blank!">
+                    <FormField label="Tags (comma seperated)">
                       <TextInput onDOMChange={ this.changeTags } />
                     </FormField>
                   </fieldset>
@@ -108,3 +135,7 @@ export default class Settings extends React.Component {
         );
     }
 }
+
+Settings.propTypes = {
+    submitConfigFunction: PropTypes.func.isRequired
+};
