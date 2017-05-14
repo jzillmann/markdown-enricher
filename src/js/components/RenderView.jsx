@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Box from 'grommet/components/Box'
-import Paragraph from 'grommet/components/Paragraph'
 import Tabs from 'grommet/components/Tabs';
 import Tab from 'grommet/components/Tab';
 import FormField from 'grommet/components/FormField'
