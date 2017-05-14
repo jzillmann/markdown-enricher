@@ -21,10 +21,10 @@ export default class Settings extends React.Component {
         super(props);
         this.state = {
             submitConfigFunction: props.submitConfigFunction,
-            title: null,
+            title: '',
             type: null,
-            source: null,
-            tags: null,
+            source: '',
+            tags: '',
             titleError: null,
             typeError: null,
             sourceError: null,
@@ -34,6 +34,7 @@ export default class Settings extends React.Component {
         this.selectType = this.selectType.bind(this);
         this.changeSource = this.changeSource.bind(this);
         this.changeTags = this.changeTags.bind(this);
+        this.autoFill = this.autoFill.bind(this);
         this.submit = this.submit.bind(this);
     }
 
@@ -58,6 +59,15 @@ export default class Settings extends React.Component {
     changeTags(event) {
         this.setState({
             tags: event.target.value
+        });
+    }
+
+    autoFill() {
+        this.setState({
+            title: 'AutoFill Title',
+            type: 'Translation',
+            source: 'The programmers brain',
+            tags: 'test, quick'
         });
     }
 
@@ -95,6 +105,7 @@ export default class Settings extends React.Component {
     }
 
     render() {
+        const autoFillLink = process.env.NODE_ENV === "development" ? <a onClick={ this.autoFill }>Auto-Fill</a> : undefined;
 
         return (
             <Form pad={ { vertical: 'small', horizontal: 'large' } }>
@@ -106,11 +117,12 @@ export default class Settings extends React.Component {
               <Section>
                 <Header>
                   <h3>Document Tag</h3>
+                  { autoFillLink }
                 </Header>
                 <FormFields>
                   <fieldset>
                     <FormField label="Title" error={ this.state.titleError }>
-                      <TextInput onDOMChange={ this.changeTitle } autoFocus />
+                      <TextInput onDOMChange={ this.changeTitle } value={ this.state.title } autoFocus />
                     </FormField>
                     <FormField label="Type" error={ this.state.typeError }>
                       <Select
@@ -120,10 +132,10 @@ export default class Settings extends React.Component {
                               value={ this.state.type } />
                     </FormField>
                     <FormField label="Source (TODO don't show for compilation)" error={ this.state.sourceError }>
-                      <TextInput onDOMChange={ this.changeSource } />
+                      <TextInput onDOMChange={ this.changeSource } value={ this.state.source } />
                     </FormField>
                     <FormField label="Tags (comma seperated)">
-                      <TextInput onDOMChange={ this.changeTags } />
+                      <TextInput onDOMChange={ this.changeTags } value={ this.state.tags } />
                     </FormField>
                   </fieldset>
                 </FormFields>
