@@ -25,5 +25,19 @@ This is the second paragraph... well, counting headlines as paragraphs like this
 Could be transformed in to this easily:
 
 ```
+<!-- title="Hello World Doc" -->
+<!-- type="Translation" -->
+<!-- source="Tutorial for Hello World texts" -->
+<!-- tags="nonsense, intro" -->
+
+#Hello World
+<!-- id="Tutorial for Hello World texts[0]" tags=""-->
+
+This is a simple paragraph. Nothing
+unusual about it.
+<!-- id="Tutorial for Hello World texts[1]" tags=""-->
+
+This is the second paragraph... well, counting headlines as paragraphs like this tool does, its actually the 3rd one.
+<!-- id="Tutorial for Hello World texts[2]" tags=""-->
 
 ```
