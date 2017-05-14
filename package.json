@@ -44,7 +44,6 @@
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "react-markdown": "^2.5.0",
-    "react-onclickout": "^2.0.6"
+    "react-markdown": "^2.5.0"
   }
 }
