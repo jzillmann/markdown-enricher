@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Box from 'grommet/components/Box'
-import Button from 'grommet/components/Button'
 import Tabs from 'grommet/components/Tabs';
 import Tab from 'grommet/components/Tab';
 import FormField from 'grommet/components/FormField'
@@ -38,7 +37,7 @@ export default class RenderView extends React.Component {
             <Tabs justify="center">
               <Tab title='Text'>
                 <Box
-                     margin='large'
+                     margin={ { horizontal: 'large' } }
                      align='center'
                      focusable={ false }
                      colorIndex="light-1">
@@ -49,7 +48,7 @@ export default class RenderView extends React.Component {
               </Tab>
               <Tab title='Markdown'>
                 <Box
-                     margin='small'
+                     margin={ { horizontal: 'large' } }
                      align='center'
                      focusable={ false }
                      colorIndex="light-1">

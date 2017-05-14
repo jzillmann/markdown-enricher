@@ -7,8 +7,9 @@ import Box from 'grommet/components/Box'
 import FormField from 'grommet/components/FormField'
 import Layer from 'grommet/components/Layer'
 
-import Settings from './Settings.jsx';
+import ClickOut from "react-onclickout";
 
+import Settings from './Settings.jsx';
 import TextWithConfig from '../plain/TextWithConfig.js'
 
 export default class TextInputView extends React.Component {
@@ -55,7 +56,9 @@ export default class TextInputView extends React.Component {
                      closer={ true }
                      flush={ true }
                      onClose={ this.settingsCancelled.bind(this) }>
-                <Settings submitConfigFunction={ this.submitConfig.bind(this) } />
+                <ClickOut onClickOut={ this.settingsCancelled.bind(this) }>
+                  <Settings submitConfigFunction={ this.submitConfig.bind(this) } />
+                </ClickOut>
               </Layer>
             : null;
 
